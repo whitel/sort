@@ -2,17 +2,27 @@
 using namespace std;
 
 class Solution {
+private:
+    vector<int> result;
 public:
     vector<int> sortArray(vector<int>& nums) {
-        quickSort(nums, 0, nums.size());
+        bool flag = false;
+        quickSort(nums, 0, nums.size(), 5, flag);
         return nums;
     }
 
-    void quickSort(vector<int> &nums, int left, int right) {
+    void quickSort(vector<int> &nums, int left, int right, int k, bool &flag) {
+        if(flag == true) {
+            return ;
+        }
         if(left < right) {
             int privotLoc = partition(nums, left, right);
-            quickSort(nums, left, privotLoc);
-            quickSort(nums, privotLoc + 1, right);
+            if(privotLoc == k) {
+                result.assign(nums.begin(), nums.begin() + k);
+                flag = true;
+            }
+            quickSort(nums, left, privotLoc, k, flag);
+            quickSort(nums, privotLoc + 1, right, k, flag);
         }
     }
 
@@ -25,6 +35,13 @@ public:
             swap(nums[left], nums[right]);
         }
         return left;
+    }
+
+    void printResult() {
+        for(vector<int>::iterator it = result.begin(); it != result.end(); it++) {
+            cout << *it << " ";
+        }
+        cout << endl;
     }
 };
 
@@ -44,5 +61,6 @@ int main() {
     printArray(a);
     s.sortArray(a);
     printArray(a);
+    s.printResult();
     return 0;
 }
