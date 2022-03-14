@@ -4,7 +4,28 @@ using namespace std;
 class Solution {
 public:
     vector<int> sortArray(vector<int>& nums) {
+        insertSort(nums);
         return nums;
+    }
+
+    void insertSort(vector<int> &nums) {
+        int n = nums.size();
+        for(int i = 1; i < n; i++) {
+            // 若第i-1个元素小于第i个元素，直接插入
+            if(nums[i-1] < nums[i])
+                continue;
+            // 否则移动前面排好序的元素，插入到正确位置
+            if(nums[i-1] > nums[i]) {
+                int j = i - 1;
+                int x = nums[i];
+                nums[i] = nums[i-1];
+                while(x < nums[j]) {
+                    nums[j+1] = nums[j];
+                    j--;
+                }
+                nums[j+1] = x;
+            }
+        }
     }
 };
 
