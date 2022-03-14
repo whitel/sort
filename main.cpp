@@ -4,7 +4,24 @@ using namespace std;
 class Solution {
 public:
     vector<int> sortArray(vector<int>& nums) {
+        selectSort(nums);
         return nums;
+    }
+
+    void selectSort(vector<int>& nums) {
+        for(int i = 0; i < nums.size(); i++) {
+            // 获取后面数组最小的那个元素的下标k
+            int k = i;
+            for(int j = i + 1; j < nums.size(); j++) {
+                if(nums[k] > nums[j])
+                    k = j;
+            }
+            // 防止与自己交换
+            if(k != i) {
+                // 把后面无序部分的最小值放到当前位置
+                swap(nums[k], nums[i]);
+            }
+        }
     }
 };
 
